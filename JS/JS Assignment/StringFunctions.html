@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StringFunctions</title>
+    <script>
+        function events(){
+            let str1=document.getElementById("one").value;
+            let str2=document.getElementById("two").value;
+            document.write(str1.length);
+            document.write("<br>");
+            document.write(str2.charAt(3));
+            document.write("<br>");
+            document.write(str1.slice(2,3));
+            document.write("<br>");
+            document.write(str2.substring(2,3));
+            document.write("<br>");
+            document.write(str2.substr(2,8));
+            document.write("<br>");
+            document.write(str1.toUpperCase());
+            document.write("<br>");
+            document.write(str2.toLowerCase());
+            document.write("<br>");
+            document.write(str1.concat(str2));
+            document.write("<br>");
+            document.write(str2.trim());
+            document.write("<br>");
+            document.write(str2.trimStart());
+            document.write("<br>");
+            document.write(str1.trimEnd());
+            document.write("<br>");
+            document.write(str1.repeat(5));
+            document.write("<br>");
+            document.write(str2.replace("Madhu","Bala"));
+            document.write("<br>");
+            document.write(str2.replaceAll("Madhu","Bala"));
+            document.write("<br>");
+            document.write(str2.split(" "));
+        }
+    </script>
+</head>
+<body>
+    Enter first String : <input type="text" name="" id="one"><br><br>
+    Enter second String : <input type="text" name="" id="two"><br><br> 
+    <button onclick="events()">Click</button>
+</body>
+</html>
