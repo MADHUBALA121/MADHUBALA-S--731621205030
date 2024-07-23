@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <style>
+        body{
+            background-color: grey;
+        }
+    </style>
+    <h1>Pattern </h1>
+    <input type="number" id="rows" >
+    <button onclick="Pattern()"> Pattern</button>
+    <div id="result"></div>
+
+    <script>
+      function PatternEx() {
+        let rows = document.getElementById("rows").value;
+        let result = "";
+        for (let i = 1; i <= rows; i++) {
+          for (let j = 1; j <= i; j++) {
+            result += "* ";
+          }
+          result += "<br>";
+        }
+        document.getElementById("result").innerHTML = result;
+      }
+    </script>
+  </body>
+</html>
