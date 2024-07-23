@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factorial Calculation</title>
+  <script>
+    function calculateFactorial() {
+      const num = parseInt(document.getElementById("n1").value);
+      let result;
+
+      if (num < 0) {
+        result = "Please enter a non-negative number.";
+      } else {
+        let fact = 1;
+        for (let i = 1; i <= num; i++) {
+          fact *= i;
+        }
+        result = num + "! = " + fact;
+
+      }
+
+      document.getElementById("ResultDiv").innerHTML = result;
+    }
+  </script>
+</head>
+<body>
+  Enter the number: <input type="text" id="n1" value="" />
+  <br>
+  <div id="ResultDiv"></div>
+
+  <script>
+    const inputField = document.getElementById("n1");
+    inputField.addEventListener("focus", () => {inputField.value = ""; });
+    inputField.addEventListener("blur", calculateFactorial); 
+    inputField.addEventListener("keyup", calculateFactorial); 
+  </script>
+</body>
+</html>
