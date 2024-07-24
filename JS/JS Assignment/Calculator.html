@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 5px;
+            background-color: rgb(100, 86, 86);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        th, td {
+            width: 70px;
+            height: 70px;
+            text-align: center;
+            font-size: 15px;
+            color:black;
+        }
+
+        th {
+            background-color: none;
+            color: black;
+            border-radius: 8px;
+        }
+
+        td {
+            background-color: rgb(7, 101, 148);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button{
+            width: 90%;
+            height: 70px;
+            font-size: 20px;
+            border: 2px solid rgb(21, 111, 156);
+            background-color:rgb(73, 187, 244) ;
+        }
+        #val {
+            text-align: right;
+            padding-right: 20px;
+            font-size: 30px;
+        }
+        #one{
+            width: 104%;
+            height: 70px;
+            font-size: larger;
+            border-radius: 212px;
+            border: 2px solid darkolivegreen;
+            background-color:beige;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <table >
+        <tr>
+            <th colspan="4" id="val"><input type="text" name="" id="one" onclick="myFunc"></th>
+        </tr>
+        <tr>
+            <td><button onclick="cl('C')">C</button></td>
+            <td><button onclick="a('%')">%</button></td>
+            <td><button onclick="d('del')">del</button></td>
+            <td><button onclick="a('/')">/</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="a('7')">7</button></td>
+            <td><button onclick="a('8')">8</button></td>
+            <td><button onclick="a('9')">9</button></td>
+            <td><button onclick="a('*')">*</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="a('4')">4</button></td>
+            <td><button onclick="a('5')">5</button></td>
+            <td><button onclick="a('6')">6</button></td>
+            <td><button onclick="a('-')">-</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="a('1')">1</button></td>
+            <td><button onclick="a('2')">2</button></td>
+            <td><button onclick="a('3')">3</button></td>
+            <td><button onclick="a('+')">+</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="a('00')">00</button></td>
+            <td><button onclick="a('0')">0</button></td>
+            <td><button onclick="a('.')">.</button></td>
+            <td><button onclick="c('=')">=</button></td>
+        </tr>
+    </table>
+</center>
+<script>
+    const disp = document.getElementById("one");
+    function a(value) {
+        disp.value=disp.value+value;
+    }
+    function cl() {
+        disp.value = "";
+    }
+    function d() {
+        disp.value = disp.value.slice(0, -1);
+    }
+    function c() {
+            disp.value = eval(disp.value);
+    }
+</script>
+</body>
+</html>
