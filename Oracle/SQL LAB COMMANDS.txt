@@ -1,0 +1,158 @@
+SQL*Plus: Release 11.2.0.2.0 Production on Wed Aug 7 10:05:46 2024
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect system
+Enter password:
+Connected.
+SQL> create table Client_Master(Client_No varchar(20),Name varchar(20),city varchar(10),pincode int,Bal_due int);
+
+Table created.
+
+SQL> select * from Client_Master;
+
+no rows selected
+
+SQL> insert into Client_Master values('C00001','SMITHA JAIN','Mumbai',400054,15000);
+
+1 row created.
+
+SQL> insert into Client_Master values('C00002','VANDANA RAO','Chennai',78000
+1,0);
+
+1 row created.
+
+SQL> insert into Client_Master values('C00003','PREM PUJARI','Mumbai',400057
+,5000);
+
+1 row created.
+
+SQL> insert into Client_Master values('C00004','BASU NATH','Mumbai',400056,0);
+
+1 row created.
+
+SQL> insert into Client_Master values('C00005','RAVI SHANKAR','Delhi',100001,2000);
+
+1 row created.
+
+SQL> insert into Client_Master values('C00006','ROOPA','Mumbai',400050,0);
+
+1 row created.
+
+SQL> select * from Client_Master;
+
+CLIENT_NO            NAME                 CITY          PINCODE    BAL_DUE
+-------------------- -------------------- ---------- ---------- ----------
+C00001               SMITHA JAIN          Mumbai         400054      15000
+C00002               VANDANA RAO          Chennai        780001          0
+C00003               PREM PUJARI          Mumbai         400057       5000
+C00004               BASU NATH            Mumbai         400056          0
+C00005               RAVI SHANKAR         Delhi          100001       2000
+C00006               ROOPA                Mumbai         400050          0
+
+6 row
+SQL> select * from client_master where bal_due=0;
+
+CLIENT_NO            NAME                 CITY          PINCODE    BAL_DUE
+-------------------- -------------------- ---------- ---------- ----------
+C00002               VANDANA RAO          Chennai        780001          0
+C00004               BASU NATH            Mumbai         400056          0
+C00006               ROOPA                Mumbai         400050          0
+
+SQL> update client_master set city='Jaipur' where client_no='C00004';
+
+1 row updated.
+
+SQL> select * from client_master;
+
+CLIENT_NO            NAME                 CITY          PINCODE    BAL_DUE
+-------------------- -------------------- ---------- ---------- ----------
+C00001               SMITHA JAIN          Mumbai         400054      15000
+C00002               VANDANA RAO          Chennai        780001          0
+C00003               PREM PUJARI          Mumbai         400057       5000
+C00004               BASU NATH            Jaipur         400056          0
+C00005               RAVI SHANKAR         Delhi          100001       2000
+C00006               ROOPA                Mumbai         400050          0
+
+6 rows selected.
+
+SQL> select * from client_master where city='Mumbai';
+
+CLIENT_NO            NAME                 CITY          PINCODE    BAL_DUE
+-------------------- -------------------- ---------- ---------- ----------
+C00001               SMITHA JAIN          Mumbai         400054      15000
+C00003               PREM PUJARI          Mumbai         400057       5000
+C00006               ROOPA                Mumbai         400050          0
+
+SQL> create table Sales_Order(Order_No varchar(10),Order_Date varchar(10),Client_No varchar(10),SalesMan_No varchar(10),Dely_Date varchar(10),Order_Status v
+archar(15));
+
+Table created.
+
+SQL> insert into Sales_Order values('O19001','12-Jan-13','C00001','S00001','20-Jan-13','In process');
+
+1 row created.
+
+SQL> insert into Sales_Order values('O19002','25-Jan-13','C00002','S00002','27-Jan-13','Cancelled');
+
+1 row created.
+
+SQL> insert into Sales_Order values('O46865','18-Feb-13','C00003','S00003','20-Feb-13','Fulfilled');
+
+1 row created.
+
+SQL> insert into Sales_Order values('O19003','03-Apr-13','C00001','S00001','07-Apr-13','Fulfilled');
+
+1 row created.
+
+SQL> insert into Sales_Order values('O46866','20-May-13','C00004','S00002','07-Apr-13','Cancelled');
+
+1 row created.
+
+SQL> insert into Sales_Order values('O19008','24-May-13','C00005','S00004','26-May-13','In process');
+
+1 row created.
+
+SQL> select * from Sales_Order;
+
+ORDER_NO   ORDER_DATE CLIENT_NO  SALESMAN_N DELY_DATE  ORDER_STATUS
+---------- ---------- ---------- ---------- ---------- ---------------
+O19001     12-Jan-13  C00001     S00001     20-Jan-13  In process
+O19002     25-Jan-13  C00002     S00002     27-Jan-13  Cancelled
+O46865     18-Feb-13  C00003     S00003     20-Feb-13  Fulfilled
+O19003     03-Apr-13  C00001     S00001     07-Apr-13  Fulfilled
+O46866     20-May-13  C00004     S00002     07-Apr-13  Cancelled
+O19008     24-May-13  C00005     S00004     26-May-13  In process
+
+6 rows selected.
+
+
+SQL> select NAME,CITY,PINCODE from Client_Master inner join Sales_Order on Client_Master.CLIENT_NO=Sales_Order.CLIENT_NO where ORDER_NO in ('O19003','O19002');
+
+NAME                 CITY          PINCODE
+-------------------- ---------- ----------
+SMITHA JAIN          Mumbai         400054
+VANDANA RAO          Chennai        780001
+
+SQL> select trim(name) || ' live in the city of '|| city as address from client_master;
+
+ADDRESS
+---------------------------------------------------
+SMITHA JAIN live in the city of Mumbai
+VANDANA RAO live in the city of Chennai
+PREM PUJARI live in the city of Mumbai
+BASU NATH live in the city of Jaipur
+RAVI SHANKAR live in the city of Delhi
+ROOPA live in the city of Mumbai
+
+6 rows selected.
+
+
+SQL> select Client_Master.CLIENT_NO,NAME,CITY, PINCODE from Client_Master, Sales_Order  where Client_Master.CLIENT_NO = Sales_Order.CLIENT_NO and ORDER_STATUS = 'In process';
+
+CLIENT_NO            NAME                 CITY          PINCODE
+-------------------- -------------------- ---------- ----------
+C00001               SMITHA JAIN          Mumbai         400054
+C00005               RAVI SHANKAR         Delhi          100001
+
+SQL>
