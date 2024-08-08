@@ -1,0 +1,455 @@
+SQL> create table tbl_employee1(eid number(5),ename varchar(20),esalary number(5));
+
+Table created.
+
+SQL> insert into tbl_employee1 values(101,'madhu',30000);
+
+1 row created.
+
+SQL> insert into tbl_employee1 values(102,'loks',4000);
+
+1 row created.
+
+SQL> insert into tbl_employee1 values(103,'bala',5000);
+
+1 row created.
+
+SQL> insert into tbl_employee1 values(104,'diva',6000);
+
+1 row created.
+
+SQL> insert into tbl_employee1 values(105,'arun',8000);
+
+1 row created.
+
+SQL> select * from tbl_employee1;
+
+       EID ENAME                   ESALARY
+---------- -------------------- ----------
+       101 madhu                     30000
+       102 loks                       4000
+       103 bala                       5000
+       104 diva                       6000
+       105 arun                       8000
+
+SQL> insert into tbl_employee1(eid,esalary) values (106,10000);
+
+1 row created.
+
+SQL> select * from tbl_employee1;
+
+       EID ENAME                   ESALARY
+---------- -------------------- ----------
+       101 madhu                     30000
+       102 loks                       4000
+       103 bala                       5000
+       104 diva                       6000
+       105 arun                       8000
+       106                           10000
+
+6 rows selected.
+
+SQL> insert into tbl_employee2 values(104,'diva',6000,10);
+
+1 row created.
+
+SQL> insert into tbl_employee2 values(105,'madhu',7000,20);
+
+1 row created.
+
+SQL> insert into tbl_employee2 values(106,'loks',8000,30);
+
+1 row created.
+
+SQL> insert into tbl_employee2 values(107,'arun',9000,40);
+
+1 row created.
+
+SQL> insert into tbl_employee2 values(108,'bala',10000,40);
+
+1 row created.
+
+SQL> select * from tbl_employee2;
+
+       EID ENAME                   ESALARY        DNO
+---------- -------------------- ---------- ----------
+       104 diva                       6000         10
+       105 madhu                      7000         20
+       106 loks                       8000         30
+       107 arun                       9000         40
+       108 bala                      10000         40
+
+SQL> select dno,count(*) from tbl_employee2 group by dno;
+
+       DNO   COUNT(*)
+---------- ----------
+        30          1
+        20          1
+        40          2
+        10          1
+
+SQL> insert into tbl_employee1(eid,esalary,dno) values (106,10000,50);
+insert into tbl_employee1(eid,esalary,dno) values (106,10000,50)
+                                      *
+ERROR at line 1:
+ORA-00904: "DNO": invalid identifier
+
+
+SQL> insert into tbl_employee2(eid,esalary,dno) values (106,10000,50);
+
+1 row created.
+
+SQL> select * from tbl_employee2;
+
+       EID ENAME                   ESALARY        DNO
+---------- -------------------- ---------- ----------
+       104 diva                       6000         10
+       105 madhu                      7000         20
+       106 loks                       8000         30
+       107 arun                       9000         40
+       108 bala                      10000         40
+       106                           10000         50
+
+6 rows selected.
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        30          1         8000         8000         8000         8000
+        20          1         7000         7000         7000         7000
+        40          2        19000         9500         9000        10000
+        50          1        10000        10000        10000        10000
+        10          1         6000         6000         6000         6000
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno order by dno;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        10          1         6000         6000         6000         6000
+        20          1         7000         7000         7000         7000
+        30          1         8000         8000         8000         8000
+        40          2        19000         9500         9000        10000
+        50          1        10000        10000        10000        10000
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno order by dno desc;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        50          1        10000        10000        10000        10000
+        40          2        19000         9500         9000        10000
+        30          1         8000         8000         8000         8000
+        20          1         7000         7000         7000         7000
+        10          1         6000         6000         6000         6000
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno having min(esalary)>3000 order by dno;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        10          1         6000         6000         6000         6000
+        20          1         7000         7000         7000         7000
+        30          1         8000         8000         8000         8000
+        40          2        19000         9500         9000        10000
+        50          1        10000        10000        10000        10000
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno having max(esalary)>4000 order by dno;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        10          1         6000         6000         6000         6000
+        20          1         7000         7000         7000         7000
+        30          1         8000         8000         8000         8000
+        40          2        19000         9500         9000        10000
+        50          1        10000        10000        10000        10000
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno having max(esalary)>=6000 order by dno;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        10          1         6000         6000         6000         6000
+        20          1         7000         7000         7000         7000
+        30          1         8000         8000         8000         8000
+        40          2        19000         9500         9000        10000
+        50          1        10000        10000        10000        10000
+
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno having max(esalary)>=6000 order by dno desc;
+
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        50          1        10000        10000        10000        10000
+        40          2        19000         9500         9000        10000
+        30          1         8000         8000         8000         8000
+        20          1         7000         7000         7000         7000
+        10          1         6000         6000         6000         6000
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno having max(esalary)<6000 order by dno;
+
+no rows selected
+
+SQL> select dno,count(*),sum(esalary),avg(esalary),min(esalary),max(esalary)from tbl_employee2 group by dno having max(esalary)<7000 order by dno;
+
+       DNO   COUNT(*) SUM(ESALARY) AVG(ESALARY) MIN(ESALARY) MAX(ESALARY)
+---------- ---------- ------------ ------------ ------------ ------------
+        10          1         6000         6000         6000         6000
+
+SQL> drop table tbl_employee2;
+
+Table dropped.
+
+SQL> create table tbl_student(reg_no number(5) primary key,stud_name varchar
+2(20) not null,stud_email varchar2(20) unique,stud_age number(3) check(stud_
+age>0),stud_location varchar2(20) default 'Erode');
+
+Table created.
+
+SQL> insert into tbl_student values(12,'madhu','smadhubala@gmail.com',21,'salem');
+
+1 row created.
+
+SQL> insert into tbl_student values(13,'logeshwari','logs@gmail.com',20,'thi
+rupathi');
+
+1 row created.
+
+SQL> insert into tbl_student values(14,'diva','diva@gmail.com','Vellakovil')
+;
+insert into tbl_student values(14,'diva','diva@gmail.com','Vellakovil')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into tbl_student values(14,'diva','diva@gmail.com',22,'Vellakovi
+l');
+
+1 row created.
+
+SQL> insert into tbl_student (reg_no,stud_name.stud_age,stud_email) values (
+501,'bhuvan','mounika@gmail.com',39);
+insert into tbl_student (reg_no,stud_name.stud_age,stud_email) values (501,'bhuvan','mounika@gmail.com',39)
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into tbl_student (reg_no,stud_name.stud_email,stud_age) values (
+501,'bhuvan','mounika@gmail.com',39);
+insert into tbl_student (reg_no,stud_name.stud_email,stud_age) values (501,'bhuvan','mounika@gmail.com',39)
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into tbl_student (reg_no,stud_name,stud_email,stud_age) values (
+501,'bhuvan','mouni@gmail.com',39);
+
+1 row created.
+
+SQL> select*from tbl_employee;
+select*from tbl_employee
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select*from tbl_student;
+
+    REG_NO STUD_NAME            STUD_EMAIL             STUD_AGE
+---------- -------------------- -------------------- ----------
+STUD_LOCATION
+--------------------
+        12 madhu                smadhubala@gmail.com         21
+salem
+
+        13 logeshwari           logs@gmail.com               20
+thirupathi
+
+        14 diva                 diva@gmail.com               22
+Vellakovil
+
+
+    REG_NO STUD_NAME            STUD_EMAIL             STUD_AGE
+---------- -------------------- -------------------- ----------
+STUD_LOCATION
+--------------------
+       501 bhuvan               mouni@gmail.com              39
+Erode
+
+
+SQL> create table department
+  2
+SQL> create table department(dno number(5) primary key,dname varchar2(20));
+
+Table created.
+
+SQL> create table employee(eid number(5) primary key,ename varchar2(20),esal
+ary number(5),dno number(5),foreign key(dno) references department(dno));
+
+Table created.
+
+SQL> insert into employee values(101,'madhu',2000,10);
+insert into employee values(101,'madhu',2000,10)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C007007) violated - parent key not
+found
+
+
+SQL> insert into employee values(10,'CSE');
+insert into employee values(10,'CSE')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into department values(10,'CSE');
+
+1 row created.
+
+SQL> insert into department values(11,'IT');
+
+1 row created.
+
+SQL> insert into employee values(101,'madhu',2000,10);
+
+1 row created.
+
+
+
+SQL> insert into employee values(102,'bala',3000,11);
+
+1 row created.
+
+SQL> create view myview as select * from employee where dno=10;
+
+View created.
+
+SQL> select*from tbl_employee;
+select*from tbl_employee
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select*from employee;
+
+       EID ENAME                   ESALARY        DNO
+---------- -------------------- ---------- ----------
+       101 madhu                      2000         10
+       102 bala                       3000         11
+
+SQL> select * from myview;
+
+       EID ENAME                   ESALARY        DNO
+---------- -------------------- ---------- ----------
+       101 madhu                      2000         10
+
+SQL> update on view myview;
+update on view myview
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update on myview;
+update on myview
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update myview set esalary=2500 where dno=10;
+
+1 row updated.
+
+SQL> update on myview;
+update on myview
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> select * from myview;
+
+       EID ENAME                   ESALARY        DNO
+---------- -------------------- ---------- ----------
+       101 madhu                      2500         10
+
+
+
+
+SQL> delete myview where dno=10;
+
+1 row deleted.
+
+SQL> select * from myview;
+
+no rows selected
+
+SQL> select*from tbl_student;
+
+    REG_NO STUD_NAME            STUD_EMAIL             STUD_AGE
+---------- -------------------- -------------------- ----------
+STUD_LOCATION
+--------------------
+        12 madhu                smadhubala@gmail.com         21
+salem
+
+        13 logeshwari           logs@gmail.com               20
+thirupathi
+
+        14 diva                 diva@gmail.com               22
+Vellakovil
+
+
+    REG_NO STUD_NAME            STUD_EMAIL             STUD_AGE
+---------- -------------------- -------------------- ----------
+STUD_LOCATION
+--------------------
+       501 bhuvan               mouni@gmail.com              39
+Erode
+
+
+SQL> select * from department;
+
+       DNO DNAME
+---------- --------------------
+        10 CSE
+        11 IT
+
+SQL> drop view myview;
+
+View dropped.
+
+SQL> select eid,ename from tbl_employee;
+select eid,ename from tbl_employee
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select eid,ename from employee;
+
+       EID ENAME
+---------- --------------------
+       102 bala
+
+SQL> select eid as "Employee Id",ename "Employee Name" from employee;
+
+Employee Id Employee Name
+----------- --------------------
+        102 bala
+
+SQL> select dno,count(*) from employee group by dno;
+
+       DNO   COUNT(*)
+---------- ----------
+        11          1
+
+SQL> select dno,count(*) as "Total No of Workers" from employee group by dno
+;
+
+       DNO Total No of Workers
+---------- -------------------
